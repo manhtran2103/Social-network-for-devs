@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
@@ -18,6 +19,9 @@ mongoose
   .connect(db)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
+// set up passport , jwt
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
 // use Routes
 app.use("/api/users", users);

@@ -3,6 +3,7 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 const User = require("../../models/User");
 const secretKey = require("../../config/keys").secretKey;
@@ -13,6 +14,7 @@ router.get("/test", (req, res) => res.json({ msg: "users test is working" }));
 
 // @route GET api/users/register
 // @desc register users route
+// @access public
 router.post("/register", (req, res) => {
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -75,5 +77,16 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+// @route GET api/users/current
+// @desc current users route
+// @access private
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+);
 
 module.exports = router;
