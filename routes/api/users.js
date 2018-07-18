@@ -7,6 +7,7 @@ const passport = require("passport");
 
 const User = require("../../models/User");
 const secretKey = require("../../config/keys").secretKey;
+const validateRegisterForm = require("../../validation/register");
 
 // @route GET api/users/test
 // @desc test users route
@@ -16,9 +17,14 @@ router.get("/test", (req, res) => res.json({ msg: "users test is working" }));
 // @desc register users route
 // @access public
 router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegisterForm(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "email already exists" });
+      errors.email = "email already exists";
+      return res.status(400).json(errors);
     } else {
       const avatar = gravatar.url(req.body.email, {
         s: "200", //size
