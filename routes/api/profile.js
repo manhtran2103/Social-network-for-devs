@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const Profile = require("../../models/Profile");
+const User = require("../../models/User");
 const validateProfileForm = require("../../validation/profile");
+const validateExperienceForm = require("../../validation/experience");
+const validateEducationForm = require("../../validation/education");
 
 // @route GET api/profile/test
 // @desc test profile route
@@ -140,4 +143,112 @@ router.post(
       .catch(err => console.log(err));
   }
 );
+
+// @route POST api/profile/experience
+// @desc profile route
+// @access private
+router.post(
+  "/experience",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //validate experience input
+    const { errors, isValid } = validateExperienceForm(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const exp = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+      profile.experiences.unshift(exp);
+      profile.save().then(profile => res.json(profile));
+    });
+  }
+);
+// @route POST api/profile/education
+// @desc profile route
+// @access private
+router.post(
+  "/education",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //validate education input
+    const { errors, isValid } = validateEducationForm(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const edu = {
+        school: req.body.school,
+        degree: req.body.degree,
+        major: req.body.major,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+      profile.education.unshift(edu);
+      profile.save().then(profile => res.json(profile));
+    });
+  }
+);
+
+// @route DELETE api/profile/experience/:id
+// @desc profile route
+// @access private
+
+router.delete(
+  "/experience/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const id = profile.experiences
+        .map(item => item.id)
+        .indexOf(req.params.id);
+      profile.experiences.splice(id, 1);
+      profile.save().then(profile => res.json(profile));
+    });
+  }
+);
+
+// @route DELETE api/profile/education/:id
+// @desc profile route
+// @access private
+
+router.delete(
+  "/education/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const id = profile.education.map(item => item.id).indexOf(req.params.id);
+      profile.education.splice(id, 1);
+      profile.save().then(profile => res.json(profile));
+    });
+  }
+);
+
+// @route DELETE api/profile
+// @desc profile route
+// @access private
+
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id }).then(() => {
+      User.findOneAndRemove({ _id: req.user.id }).then(() =>
+        res.json({ success: true })
+      );
+    });
+  }
+);
+
 module.exports = router;
