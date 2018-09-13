@@ -29,3 +29,11 @@
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.register {
+  margin-bottom: 110px;
+}
+
+.login {
+  margin-bottom: 290px;
+}
