@@ -8,6 +8,7 @@ class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
     this.props.logoutUser();
+    // redirect to landind page
     window.location.href = "/";
   }
   render() {
