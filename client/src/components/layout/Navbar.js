@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import React, { Component } from "react";
 import { logoutUser } from "../../actions/auth";
+import { clearCurrentProfile } from "../../actions/profile";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
-    // redirect to landind page
-    window.location.href = "/";
   }
   render() {
     const { auth } = this.props;
@@ -93,5 +93,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);

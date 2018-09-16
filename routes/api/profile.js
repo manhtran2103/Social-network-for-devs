@@ -75,7 +75,7 @@ router.get(
       .populate("user", ["name", "avatar"])
       .then(profile => {
         if (!profile) {
-          errors.profile = "profile not found";
+          errors.profile = "Profile not found";
           return res.status(404).json(errors);
         }
         res.json(profile);
