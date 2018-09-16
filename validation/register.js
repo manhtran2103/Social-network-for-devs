@@ -18,7 +18,7 @@ module.exports = function validateRegisterForm(data) {
     errors.email = "Email is required";
   }
   if (!validator.isLength(data.password, { min: 6 })) {
-    errors.password = "Confirm password must be minimum 6 characters";
+    errors.password = "Password must be minimum 6 characters";
   }
   if (validator.isEmpty(data.password)) {
     errors.password = "Password is required";

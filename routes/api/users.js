@@ -24,7 +24,7 @@ router.post("/register", (req, res) => {
   }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      errors.email = "email already exists";
+      errors.email = "Email already existed";
       return res.status(400).json(errors);
     } else {
       const avatar = gravatar.url(req.body.email, {
@@ -66,7 +66,7 @@ router.post("/login", (req, res) => {
   User.findOne({ email }).then(user => {
     // check for user
     if (!user) {
-      errors.email = "user not found";
+      errors.email = "User not found";
       return res.status(404).json(errors);
     }
     // check for password
@@ -74,6 +74,7 @@ router.post("/login", (req, res) => {
       if (isMatched) {
         const payload = {
           id: user.id,
+          name: user.name,
           email: user.email,
           avatar: user.avatar
         };
