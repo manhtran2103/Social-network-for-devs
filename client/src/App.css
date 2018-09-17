@@ -25,11 +25,33 @@
 .form-control::placeholder {
   color: #bbb !important;
 }
-
 .register {
   margin-bottom: 110px;
 }
 
 .login {
   margin-bottom: 290px;
+}
+/* styling social network icon */
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+.fa-twitter {
+  background: #55acee;
+  color: white;
 }
