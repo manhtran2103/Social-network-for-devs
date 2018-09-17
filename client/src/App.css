@@ -34,24 +34,19 @@
 }
 /* styling social network icon */
 .fa-facebook {
-  background: #3b5998;
-  color: white;
+  color: #3b5998;
 }
 .fa-linkedin {
-  background: #007bb5;
-  color: white;
+  color: #007bb5;
 }
 
 .fa-youtube {
-  background: #bb0000;
-  color: white;
+  color: #bb0000;
 }
 
 .fa-instagram {
-  background: #125688;
-  color: white;
+  color: #125688;
 }
 .fa-twitter {
-  background: #55acee;
-  color: white;
+  color: #55acee;
 }
