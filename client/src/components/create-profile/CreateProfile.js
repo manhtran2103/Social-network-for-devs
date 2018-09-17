@@ -5,7 +5,8 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import InputGroup from "../common/InputGroup";
 import SelectListGroup from "../common/SelectListGroup";
-
+import { createProfile } from "../../actions/profile";
+import { withRouter } from "react-router-dom";
 class CreateProfile extends Component {
   constructor(props) {
     super(props);
@@ -32,14 +33,36 @@ class CreateProfile extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.handle,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      githubusername: this.state.githubusername,
+      bio: this.state.bio,
+      twitter: this.state.twitter,
+      youtube: this.state.youtube,
+      linkedin: this.state.linkedin,
+      instagram: this.state.instagram,
+      facebook: this.state.facebook
+    };
+    this.props.createProfile(profileData, this.props.history);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  componentWillReceiveProps(nextProp) {
+    if (nextProp) {
+      this.setState({ errors: nextProp.errors });
+    }
+  }
+
   render() {
-    const { errors } = this.props;
+    const { errors } = this.state;
     const selecOptions = [
       { label: "* Select your level status", value: 0 },
       { label: "Junior Developer", value: "Junior Developer" },
@@ -208,9 +231,11 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  createProfile
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateProfile);
+)(withRouter(CreateProfile));

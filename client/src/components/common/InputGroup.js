@@ -19,7 +19,6 @@ const InputGroup = ({ placeholder, name, value, onChange, error, icon }) => {
         onChange={onChange}
       />
       {error && <div className="invalid-feedback">{error}</div>}
-      {/* {info && <small className="form-text text-muted">{info}</small>} */}
     </div>
   );
 };
