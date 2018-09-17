@@ -3,7 +3,8 @@ import {
   PROFILE_LOADING,
   GET_PROFILE,
   CLEAR_CURRENT_PROFILE,
-  GET_ERRORS
+  GET_ERRORS,
+  SET_CURRENT_USER
 } from "./types";
 
 // get profile
@@ -30,6 +31,24 @@ export const createProfile = (profileData, history) => dispatch => {
   axios
     .post("/api/profile", profileData)
     .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// delete account
+export const deleteAccount = () => dispatch => {
+  axios
+    .delete("/api/profile")
+    .then(res =>
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: {}
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
