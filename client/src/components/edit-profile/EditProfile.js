@@ -5,9 +5,10 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import InputGroup from "../common/InputGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import { createProfile } from "../../actions/profile";
+import { createProfile, getCurrentProfile } from "../../actions/profile";
 import { withRouter } from "react-router-dom";
-class CreateProfile extends Component {
+import isEmpty from "../../validation/is-empty";
+class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,16 +56,64 @@ class CreateProfile extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  componentWillReceiveProps(nextProp) {
-    if (nextProp.errors) {
-      this.setState({ errors: nextProp.errors });
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+    if (nextProps.profile.profile) {
+      const { profile } = nextProps.profile;
+      profile.handle = !isEmpty(profile.handle) ? profile.handle : "";
+      profile.company = !isEmpty(profile.company) ? profile.company : "";
+      profile.website = !isEmpty(profile.website) ? profile.website : "";
+      profile.status = !isEmpty(profile.status) ? profile.status : "";
+      profile.skillsEdit = profile.skills.join(",");
+      profile.githubusername = !isEmpty(profile.githubusername)
+        ? profile.githubusername
+        : "";
+      profile.bio = !isEmpty(profile.bio) ? profile.bio : "";
+      profile.social = !isEmpty(profile.social) ? profile.social : {};
+      profile.twitter = !isEmpty(profile.social.twitter)
+        ? profile.social.twitter
+        : "";
+      profile.youtube = !isEmpty(profile.social.youtube)
+        ? profile.social.youtube
+        : "";
+      profile.linkedin = !isEmpty(profile.social.linkedin)
+        ? profile.social.linkedin
+        : "";
+      profile.instagram = !isEmpty(profile.social.instagram)
+        ? profile.social.instagram
+        : "";
+      profile.facebook = !isEmpty(profile.social.facebook)
+        ? profile.social.facebook
+        : "";
+
+      this.setState({
+        handle: profile.handle,
+        company: profile.company,
+        website: profile.website,
+        location: profile.location,
+        status: profile.status,
+        skills: profile.skillsEdit,
+        githubusername: profile.githubusername,
+        bio: profile.bio,
+        twitter: profile.twitter,
+        youtube: profile.youtube,
+        linkedin: profile.linkedin,
+        instagram: profile.instagram,
+        facebook: profile.facebook
+      });
     }
   }
 
   render() {
     const { errors } = this.state;
     const selecOptions = [
-      { label: "* Select your level status", value: 0 },
+      { label: "* Select your level status", value: "" },
       { label: "Junior Developer", value: "Junior Developer" },
       { label: "Senior Developer", value: "Senior Developer" },
       { label: "Tech Lead", value: "Tech Lead" },
@@ -124,10 +173,7 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-5 text-center">Create your profile</h1>
-              <p className="lead text-center">
-                Let's add some infomation to make your profile stand out
-              </p>
+              <h1 className="display-5 text-center">Edit your profile</h1>
               <small className="d-block pb-4">* required field</small>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
@@ -198,11 +244,11 @@ class CreateProfile extends Component {
                 <div className="mb-3">
                   <button
                     type="button"
-                    onClick={() =>
+                    onClick={() => {
                       this.setState({
                         displaySocialInput: !this.state.displaySocialInput
-                      })
-                    }
+                      });
+                    }}
                     className="btn btn-light mr-2"
                   >
                     Add Social Network Links
@@ -224,20 +270,19 @@ class CreateProfile extends Component {
   }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   errors: PropTypes.object.isRequired,
-  createProfile: PropTypes.func.isRequired
+  profile: PropTypes.object.isRequired,
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  profile: state.profile,
   errors: state.errors
 });
 
-const mapDispatchToProps = {
-  createProfile
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(withRouter(CreateProfile));
+  { createProfile, getCurrentProfile }
+)(withRouter(EditProfile));
