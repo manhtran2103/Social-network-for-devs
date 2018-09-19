@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
+import { addExperience } from "../../actions/profile";
 
 export class AddExperience extends Component {
   constructor(props) {
@@ -22,13 +23,37 @@ export class AddExperience extends Component {
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onCheck = this.onCheck.bind(this);
   }
 
   onSubmit(e) {
     e.preventDefault();
+    const expData = {
+      company: this.state.company,
+      title: this.state.title,
+      location: this.state.location,
+      from: this.state.from,
+      to: this.state.to,
+      current: this.state.current,
+      description: this.state.description
+    };
+    this.props.addExperience(expData, this.props.history);
   }
 
-  onChange(e) {}
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  onCheck(e) {
+    this.setState({
+      disabled: !this.state.disabled,
+      current: !this.state.current
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
 
   render() {
     const { errors } = this.state;
@@ -83,7 +108,22 @@ export class AddExperience extends Component {
                   value={this.state.to}
                   onChange={this.onChange}
                   error={errors.to}
+                  disabled={this.state.disabled ? "disabled" : ""}
                 />
+                <div className="form-check mb-4">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    name="current"
+                    value={this.state.current}
+                    checked={this.state.current}
+                    onChange={this.onCheck}
+                    id="current"
+                  />
+                  <label htmlFor="current" className="form-check-label">
+                    Current Job
+                  </label>
+                </div>
 
                 <TextAreaFieldGroup
                   placeholder="Job Description"
@@ -109,7 +149,8 @@ export class AddExperience extends Component {
 
 AddExperience.propTypes = {
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  addExperience: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -117,7 +158,9 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  addExperience
+};
 
 export default connect(
   mapStateToProps,
