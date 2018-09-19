@@ -8,6 +8,7 @@ import SelectListGroup from "../common/SelectListGroup";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
 import { withRouter } from "react-router-dom";
 import isEmpty from "../../validation/is-empty";
+
 class EditProfile extends Component {
   constructor(props) {
     super(props);
@@ -54,10 +55,6 @@ class EditProfile extends Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-  }
-
-  componentDidMount() {
-    this.props.getCurrentProfile();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -108,6 +105,10 @@ class EditProfile extends Component {
         facebook: profile.facebook
       });
     }
+  }
+
+  componentDidMount() {
+    this.props.getCurrentProfile();
   }
 
   render() {

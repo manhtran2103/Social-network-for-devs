@@ -8,6 +8,7 @@ import Register from "./components/layout/Register";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
+import AddExperience from "./components/add-expreriences/AddExperience";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -50,6 +51,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute path="/edit-profile" component={EditProfile} />
+            </Switch>
+            <Switch>
+              <PrivateRoute path="/add-experience" component={AddExperience} />
             </Switch>
             <Footer />
           </div>
