@@ -26,6 +26,7 @@ class Experience extends Component {
           <span
             onClick={this.onDeleteClick.bind(this, exp._id)}
             className="fa fa-trash-o"
+            title="Delete"
           />
         </td>
       </tr>

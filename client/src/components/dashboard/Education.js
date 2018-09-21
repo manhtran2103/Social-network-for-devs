@@ -26,6 +26,7 @@ class Education extends Component {
           <span
             onClick={this.onDeleteClick.bind(this, edu._id)}
             className="fa fa-trash-o"
+            title="Delete"
           />
         </td>
       </tr>
