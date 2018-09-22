@@ -10,6 +10,7 @@ import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import AddExperience from "./components/add-expreriences/AddExperience";
 import AddEducation from "./components/add-education/AddEducation";
+import Profiles from "./components/profile/Profiles";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -44,6 +45,7 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/profiles" component={Profiles} />
             <Switch>
               <PrivateRoute path="/dashboard" component={Dashboard} />
             </Switch>
