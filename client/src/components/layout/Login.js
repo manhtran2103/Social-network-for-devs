@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { loginUser } from "../../actions/auth";
-import TextFieldgroup from "../common/TextFieldGroup";
+import InputGroup from "../common/InputGroup";
+import { Link } from "react-router-dom";
+import UserIcon from "../../img/user.png";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -49,30 +51,42 @@ class Login extends Component {
       <div className="login">
         <div className="container">
           <div className="row">
-            <div className="col-md-6 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
+            <div className="col-md-5 m-auto">
+              {/* <h1 className="display-4 text-center">Log In</h1> */}
+              <div className="text-center">
+                <img src={UserIcon} alt="user" height="130" />
+              </div>
               <p className="lead text-center">
                 Sign in to your DevConnector account
               </p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldgroup
+                <InputGroup
                   type="email"
                   placeholder="Email Address"
                   name="email"
                   value={this.state.email}
                   onChange={this.onChange}
                   error={errors.email}
+                  icon="fa fa-envelope fa"
                 />
-                <TextFieldgroup
+                <InputGroup
                   type="password"
                   placeholder="Password"
                   name="password"
                   onChange={this.onChange}
                   value={this.state.password}
                   error={errors.password}
+                  icon="fa fa-lock fa-lg"
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input
+                  type="submit"
+                  className="btn btn-info btn-block mt-4"
+                  value="Log In"
+                />
               </form>
+              <div className="text-center mt-4">
+                <Link to="/register">Register for an account ?</Link>
+              </div>
             </div>
           </div>
         </div>

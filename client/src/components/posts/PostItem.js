@@ -44,7 +44,7 @@ class PostItem extends Component {
             <p className="ml-3 font-weight-bold">{post.name}</p>
           </div>
           <div className="col-md-10">
-            <p className="lead">{post.text}</p> <br />
+            <p className="">{post.text}</p> <br />
             <span>
               <button
                 onClick={this.onLikeClick.bind(this, post._id)}

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/auth";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import TextFieldGroup from "../common/TextFieldGroup";
+import { withRouter, Link } from "react-router-dom";
+import InputGroup from "../common/InputGroup";
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -57,15 +57,17 @@ class Register extends Component {
                 Create your account for FREE & join developer community
               </p>
               <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
+                <InputGroup
                   type="text"
                   placeholder="Name"
                   name="name"
                   value={this.state.name}
                   onChange={this.onChange}
                   error={errors.name}
+                  icon="fa fa-user fa"
                 />
-                <TextFieldGroup
+
+                <InputGroup
                   type="email"
                   placeholder="Email Address"
                   name="email"
@@ -73,27 +75,37 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.email}
                   info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                  icon="fa fa-envelope fa"
                 />
 
-                <TextFieldGroup
+                <InputGroup
                   type="password"
                   placeholder="Password"
                   name="password"
                   value={this.state.password}
                   onChange={this.onChange}
                   error={errors.password}
+                  icon="fa fa-lock fa-lg"
                 />
 
-                <TextFieldGroup
+                <InputGroup
                   type="password"
                   placeholder="Confirm Password"
                   name="password2"
                   value={this.state.password2}
                   onChange={this.onChange}
                   error={errors.password2}
+                  icon="fa fa-lock fa-lg"
                 />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input
+                  type="submit"
+                  className="btn btn-info btn-block mt-4"
+                  value="Register"
+                />
               </form>
+              <div className="text-center mt-4">
+                <Link to="/login">Login</Link>
+              </div>
             </div>
           </div>
         </div>

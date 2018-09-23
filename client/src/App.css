@@ -1,5 +1,6 @@
 .landing {
-  background: url("./img/showcase.jpg") no-repeat;
+  background: url("https://thumbs.gfycat.com/FlawlessHeftyJunebug-size_restricted.gif")
+    no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -26,12 +27,13 @@
   color: #bbb !important;
 }
 .register {
-  margin-bottom: 110px;
+  margin-bottom: 50px;
 }
 
 .login {
-  margin-bottom: 290px;
+  margin-bottom: 140px;
 }
+
 /* styling social network icon */
 /* .fa-facebook {
   color: #3b5998;
