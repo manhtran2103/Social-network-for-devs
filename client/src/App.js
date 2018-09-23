@@ -13,6 +13,7 @@ import AddEducation from "./components/add-education/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -66,6 +67,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute path="/feed" component={Posts} />
+            </Switch>
+            <Switch>
+              <PrivateRoute path="/post/:id" component={Post} />
             </Switch>
             <Footer />
           </div>
